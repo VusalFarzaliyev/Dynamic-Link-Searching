@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTP_HOST} ^(www.)?dynamic.test$
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /public/$1
+    RewriteRule ^(/)?$ /public/index.php [L]
+</IfModule>
+
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
+</IfModule>
+
+Options -Indexes
+
+<Files ~ "\.(env|config.js|md|gitignore|gitattributes|lock)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "laravel.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files ~ "(artisan)$">
+    Order allow,deny
+    Deny from all
+</Files>
